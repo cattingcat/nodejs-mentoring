@@ -13,9 +13,9 @@ let parser = new Parser();
 
 describe('Parser', function(){
     describe('#parse()', function(){
-       it('should parse simple CVS', function(){
-           let cvs = 'qwe,asd,1,2';
-           var arr = parser.parse(cvs);
+       it('should parse simple CSV', function(){
+           let csv = 'qwe,asd,1,2';
+           var arr = parser.parse(csv);
 
            arr.should.have.length(4);
 
@@ -25,9 +25,9 @@ describe('Parser', function(){
            expect(arr[3]).to.equal('2');
        });
 
-       it('should parse CVS with quotes and whitespaces', function(){
-           let cvs = '"qwe","a sd",1,2';
-           var arr = parser.parse(cvs);
+       it('should parse CSV with quotes and whitespaces', function(){
+           let csv = '"qwe","a sd",1,2';
+           var arr = parser.parse(csv);
 
            arr.should.have.length(4);
 
@@ -37,9 +37,9 @@ describe('Parser', function(){
            expect(arr[3]).to.equal('2');
        });
 
-       it('should parse CVS with commas inside quotes', function(){
-           let cvs = '"q,w,e","a sd",1,2';
-           var arr = parser.parse(cvs);
+       it('should parse CSV with commas inside quotes', function(){
+           let csv = '"q,w,e","a sd",1,2';
+           var arr = parser.parse(csv);
 
            arr.should.have.length(4);
 
@@ -49,9 +49,9 @@ describe('Parser', function(){
            expect(arr[3]).to.equal('2');
        });
 
-       it('should parse CVS with commas-value at end', function(){
-           let cvs = '"q,w,e","a sd",1,"22"';
-           var arr = parser.parse(cvs);
+       it('should parse CSV with commas-value at end', function(){
+           let csv = '"q,w,e","a sd",1,"22"';
+           var arr = parser.parse(csv);
 
            arr.should.have.length(4);
 
@@ -61,9 +61,9 @@ describe('Parser', function(){
            expect(arr[3]).to.equal('22');
        });
 
-       it('should parse CVS with empty elements', function(){
-           let cvs = 'qwe,asd,,1,2';
-           var arr = parser.parse(cvs);
+       it('should parse CSV with empty elements', function(){
+           let csv = 'qwe,asd,,1,2';
+           var arr = parser.parse(csv);
 
            arr.should.have.length(5);
 
@@ -74,9 +74,9 @@ describe('Parser', function(){
            expect(arr[4]).to.equal('2');
        });
 
-       it('should parse CVS with ALL empty elements', function(){
-           let cvs = ',,,,';
-           var arr = parser.parse(cvs);
+       it('should parse CSV with ALL empty elements', function(){
+           let csv = ',,,,';
+           var arr = parser.parse(csv);
 
            arr.should.have.length(5);
 
@@ -85,6 +85,22 @@ describe('Parser', function(){
            expect(arr[2]).to.equal(null);
            expect(arr[3]).to.equal(null);
            expect(arr[4]).to.equal(null);
+       });
+
+       it('should throw exception if CSV file invalid (no close quote)', function(){
+           let csv = 'qwe,333,"dfg,77';
+
+           expect(() => {
+               var arr = parser.parse(csv);
+           }).to.throw(SyntaxError, /missed/)
+       });
+
+       it('should throw exception if CSV file invalid (comma in middle of value)', function(){
+           let csv = 'qwe,333,sdf"dfg,77';
+
+           expect(() => {
+               var arr = parser.parse(csv);
+           }).to.throw(SyntaxError, /middle/)
        });
    });
 });

@@ -3,7 +3,9 @@
 const
     chai = require("chai"),
     expect = chai.expect,
-    Mapper = require('../../lib/Mapper.js').Mapper;
+    Mapper = require('../../lib/Mapper.js').Mapper,
+    exceptions = require('../../lib/Exceptions.js'),
+    MapperError = exceptions.MapperError;
 
 chai.should();
 
@@ -15,13 +17,13 @@ describe('Mapper', function () {
         it('should set property of empty obj {}', function() {
             let obj = {}
             mapper.setProperty(obj, ['a', 'b', 'c'], 42);
-            expect(obj.a.b.c).to.equal(42);
+            expect(obj).to.have.deep.property('a.b.c', 42);
         });
 
         it('should set property of non empty obj {a: 1}', function() {
             let obj = {a: 1}
             mapper.setProperty(obj, ['a', 'b', 'c'], 42);
-            expect(obj.a.b.c).to.equal(42);
+            expect(obj).to.have.deep.property('a.b.c', 42);
         });
     });
 
@@ -186,6 +188,34 @@ describe('Mapper', function () {
             expect(arrs[0][0].relationObj).to.equal(objects2[1]);
 
             expect(arrs[0][0].relationObj.nested.a).to.equal('a1');
+        });
+
+        it('should throws error if arguments incorrect', function() {
+            let map1 = [
+                [{ name: 'first' }],
+                [{ name: 'second' }],
+                [{ name: 'relation' }],
+                [{ name: 'relationObj', relatedTo: 'map2', property: 'relation', relatedProperty: 'a' }]
+            ];
+            let objects1 = [
+                {
+                    first: 1,
+                    second: 2,
+                    relation: 'a1'
+                }
+            ];
+            let options = [
+                {mapping: 'map1'} // error, only one mapping
+            ];
+
+            let arrs;
+            expect(() => {
+                arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+            }).to.throw(MapperError)
+
+            expect(() => {
+                arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+            }).to.throw(Error)
         });
     });
 });

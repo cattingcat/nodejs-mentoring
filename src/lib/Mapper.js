@@ -1,4 +1,7 @@
 'use strict';
+const
+    exceptions = require('./Exceptions.js'),
+    MapperError = exceptions.MapperError;
 
 function setProperty(obj, propPath, value) {
     let len = propPath.length;
@@ -72,9 +75,14 @@ function toObject(arr, mapping) {
 }
 
 function processRelations(arrayToMap, arrays, mappings) {
+    if(arrayToMap.length != arrays.length)
+        throw new MapperError('Mappings count isnt equals to result arrays count');
+
     arrayToMap.forEach((arrMapItem, index) => {
         let currArray = arrays[index],
             currMap = mappings[arrMapItem.mapping];
+
+        if(!currMap) throw new MapperError('Mapping isnt exist');
 
         currMap.forEach(path => {
             let info = relationInfo(path);
