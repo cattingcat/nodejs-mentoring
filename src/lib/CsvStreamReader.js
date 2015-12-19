@@ -2,7 +2,10 @@
 
 const
     fs = require('fs'),
-    CsvParser = require('./CsvParser.js').get('state');
+    CsvParser = require('./CsvParser.js').get('state'),
+    FsReader = require('./CsvFsReader.js').CsvReader,
+    ConfigReader = require('./XmlConfigReader.js').ConfigReader,
+    Mapper = require('./Mapper.js').Mapper;
 
 function readSingleFile(filename, mapping, callback) {
     let inStream = fs.createReadStream(filename);
@@ -17,9 +20,10 @@ function readSingleFile(filename, mapping, callback) {
         tail = lines[len - 1];
 
         let objects = lines.map(l => {
-            let arr = this.parser.parse(l);
+            let arr = this.parser.parse(l),
+                obj = this.mapper.map(arr, mapping);
 
-            return arr;
+            return obj;
         });
 
         arr = arr.concat(objects);
@@ -34,8 +38,11 @@ function readSingleFile(filename, mapping, callback) {
 
 function CsvStreamReader() {
     this.parser = new CsvParser();
+    this.configReader = new ConfigReader();
+    this.mapper = new Mapper();
 }
 
+CsvStreamReader.prototype = Object.create(FsReader.prototype);
 CsvStreamReader.prototype.readSingleFile = readSingleFile;
 
 exports.CsvReader = CsvStreamReader;

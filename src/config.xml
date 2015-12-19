@@ -1,0 +1,40 @@
+<root>
+    <mapping name="city">
+        <property name="name" />
+        <property name="timeZoneInfo" />
+        <property name="country" />
+        <property name="coords">
+            <property name="x" />
+            <property name="y" />
+        </property>
+        <property name="timeZoneName" />
+        <property name="timeZone" property="timeZoneName" relatedTo="timezone" relatedProperty="name" />
+    </mapping>
+
+    <mapping name="timezone">
+        <property name="code" />
+        <property name="name" />
+        <property name="gmtOffsetInfo" />
+        <property name="offset" />
+        <property name="name2" />
+        <property name="magicNumbers">
+            <property name="num1" />
+            <property name="num2" />
+            <property name="num3" />
+            <property name="num4" />
+            <property name="num5" />
+            <property name="num6" />
+        </property>
+        <property name="time" />
+        <property name="daylightTimeName" />
+        <property name="daylightOffset" />
+        <property name="dayloghtMagicNumbers">
+            <property name="num1" />
+            <property name="num2" />
+            <property name="num3" />
+            <property name="num4" />
+            <property name="num5" />
+        </property>
+        <property name="daylightTime" />
+    </mapping>
+</root>
