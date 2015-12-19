@@ -49,29 +49,55 @@ function relationInfo(path) {
         lastItem = path[len - 1];
 
     if(lastItem.relatedTo) {
-        return lastItem;
-    } else {
-        return false;
+        lastItem.isRelation = true;
     }
+
+    return lastItem;
 }
 
 function toObject(arr, mapping) {
     let obj = {};
 
     let arrayIndex = 0;
-    mapping.forEach((path, index) => {
+    mapping.forEach(path => {
         let info = relationInfo(path),
             stringArrPath = path.map(i => i.name);
 
-        if(info) {
+        if(info.isRelation) {
             setProperty(obj, stringArrPath, 'To be related to ' + info.relatedTo);
         } else {
-            setProperty(obj, stringArrPath, arr[arrayIndex]);
+            let arrIndex = !isNaN(info.index) ? info.index : arrayIndex;
+
+            setProperty(obj, stringArrPath, arr[arrIndex]);
             ++arrayIndex;
         }
     });
 
     return obj;
+}
+
+function toArray(obj, mapping) {
+    let array = [];
+
+
+    let arrayIndex = 0;
+    mapping.forEach(path => {
+        let info = relationInfo(path),
+            stringArrPath = path.map(i => i.name);
+
+        if(info.isRelation) {
+            //nop
+        } else {
+            let arrIndex = !isNaN(info.index) ? info.index : arrayIndex;
+
+            let val = getProperty(obj, stringArrPath);
+
+            array[arrIndex] = val;
+            ++arrayIndex;
+        }
+    });
+
+    return array;
 }
 
 function processRelations(arrayToMap, arrays, mappings) {
@@ -87,7 +113,7 @@ function processRelations(arrayToMap, arrays, mappings) {
         currMap.forEach(path => {
             let info = relationInfo(path);
 
-            if(info) {
+            if(info.isRelation) {
                 let relatedIndex = arrayToMap.findIndex(i => i.mapping == info.relatedTo),
                     relatedArr = arrays[relatedIndex];
 
@@ -111,6 +137,8 @@ function Mapper() { }
 Mapper.prototype.map = toObject;
 Mapper.prototype.setProperty = setProperty;
 Mapper.prototype.getProperty = getProperty;
+Mapper.prototype.toObject = toObject;
+Mapper.prototype.toArray = toArray;
 Mapper.prototype.processRelations = processRelations;
 
 exports.Mapper = Mapper;

@@ -1,13 +1,13 @@
 <root>
     <mapping name="city">
-        <property name="name" />
-        <property name="timeZoneInfo" />
-        <property name="country" />
+        <property name="name" index="0"/>
+        <property name="timeZoneInfo" index="1" />
+        <property name="country" index="2" />
         <property name="coords">
-            <property name="x" />
-            <property name="y" />
+            <property name="x" index="3" />
+            <property name="y" index="4" />
         </property>
-        <property name="timeZoneName" />
+        <property name="timeZoneName" index="5" />
         <property name="timeZone" property="timeZoneName" relatedTo="timezone" relatedProperty="name" />
     </mapping>
 

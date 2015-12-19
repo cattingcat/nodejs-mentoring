@@ -14,15 +14,21 @@ let mapper = new Mapper();
 
 describe('Mapper', function () {
     describe('#setProperty()', function () {
+        let path = ['a', 'b', 'c'];
+
         it('should set property of empty obj {}', function() {
             let obj = {}
-            mapper.setProperty(obj, ['a', 'b', 'c'], 42);
+
+            mapper.setProperty(obj, path, 42);
+
             expect(obj).to.have.deep.property('a.b.c', 42);
         });
 
         it('should set property of non empty obj {a: 1}', function() {
             let obj = {a: 1}
-            mapper.setProperty(obj, ['a', 'b', 'c'], 42);
+
+            mapper.setProperty(obj, path, 42);
+
             expect(obj).to.have.deep.property('a.b.c', 42);
         });
     });
@@ -30,9 +36,74 @@ describe('Mapper', function () {
     describe('#getProperty()', function () {
         it('should get property by path', function() {
             let obj = {a: {b: {c: 42}}};
+
             let val = mapper.getProperty(obj, ['a', 'b', 'c']);
 
             expect(val).to.equal(42);
+        });
+    });
+
+    describe('#toObject()', function () {
+        let arr = [1, 2, 3];
+
+        it('should process mapping without indexes', function() {
+            let mapping = [
+                [{name: 'a'}],
+                [{name: 'b'}],
+                [{name: 'c'}]
+            ];
+
+            let obj = mapper.toObject(arr, mapping);
+
+            expect(obj.a).to.equal(1);
+            expect(obj.b).to.equal(2);
+            expect(obj.c).to.equal(3);
+        });
+
+        it('should process mapping with indexes', function() {
+            let mapping = [
+                [{name: 'a', index: 2}],
+                [{name: 'b', index: 0}],
+                [{name: 'c', index: 1}]
+            ];
+
+            let obj = mapper.toObject(arr, mapping);
+
+            expect(obj.a).to.equal(3);
+            expect(obj.b).to.equal(1);
+            expect(obj.c).to.equal(2);
+        });
+    });
+
+    describe('#toArray()', function () {
+         let obj = {a:1, b:2, c:3};
+
+        it('should process mapping without indexex', function() {
+            let mapping = [
+                [{name: 'a'}],
+                [{name: 'b'}],
+                [{name: 'c'}]
+            ];
+
+            let arr = mapper.toArray(obj, mapping);
+
+            expect(arr[0]).to.equal(obj.a);
+            expect(arr[1]).to.equal(obj.b);
+            expect(arr[2]).to.equal(obj.c);
+        });
+
+        it('should process mapping with indexex', function() {
+            let mapping = [
+                [{name: 'a', index: 2}],
+                [{name: 'b', index: 0}],
+                [{name: 'c', index: 1}]
+            ];
+
+            let arr = mapper.toArray(obj, mapping);
+
+            expect(arr[0]).to.equal(obj.b);
+            expect(arr[1]).to.equal(obj.c);
+            expect(arr[2]).to.equal(obj.a);
         });
     });
 
