@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-mentoring",
+  "version": "1.0.0",
+  "description": "EPAM NodeJS mentoring",
+  "main": "index.js",
+  "scripts": {
+    "run": "node ./src/index.js",
+    "run-dbg": "node --debug ./src/index.js",
+    "test": "node ./node_modules/mocha/bin/mocha ./src/tests/unit/**/*.js",
+    "debugger": "node ./node_modules/node-inspector/bin/inspector.js &"
+  },
+  "author": "mark_martynov@epam.com",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "node-inspector": "*"
+  },
+  "dependencies": {
+    "winston": "^2.1.1",
+    "xml2js": "^0.4.15"
+  }
+}
