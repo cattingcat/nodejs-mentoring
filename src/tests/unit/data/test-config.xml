@@ -1,0 +1,23 @@
+<root>
+    <mapping name="onePropMapping">
+        <property name="name" />
+    </mapping>
+
+    <mapping name="lineMapping">
+        <property name="name" />
+        <property name="timeZone" />
+        <property name="x" />
+        <property name="y" />
+        <property name="timeZoneName" />
+    </mapping>
+
+    <mapping name="treeMapping">
+        <property name="name" />
+        <property name="timeZone" />
+        <property name="coords">
+            <property name="x" />
+            <property name="y" />
+        </property>
+        <property name="timeZoneName" />
+    </mapping>
+</root>
