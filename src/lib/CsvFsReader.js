@@ -4,12 +4,17 @@ const
     fs = require('fs'),
     CsvParser = require('./CsvParser.js').get('state'),
     ConfigReader = require('./XmlConfigReader.js').ConfigReader,
-    Mapper = require('./Mapper.js').Mapper;
+    Mapper = require('./Mapper.js').Mapper,
+    logger = require('./Logger.js').logger;
 
 function readSingleFile(path, mapping, callback) {
+    logger.info('begin reading file: %s', path);
+
     fs.readFile(path, (err, data) => {
         let str = data.toString(),
             lines = str.split('\n');
+
+        logger.info('done reading file: %s', path);
 
         let objects = lines.map(i => {
             let csvString = i.replace('\r', ''),
@@ -19,15 +24,21 @@ function readSingleFile(path, mapping, callback) {
             return obj;
         });
 
+        logger.info('done mapping objects from file: %s', path);
         callback(null, objects);
     });
 }
 
 function read(options, callback) {
+    logger.info('#read() wjth options: %j', options);
+
     this.configReader.readMappings(options.config, (err, mappings) => {
         if(err) {
+            logger.error('error while config-file readign: %j', err);
             callback(err);
         }
+
+        logger.info('done config-file reading; mappings: %j', mappings);
 
         let promises = [];
 
@@ -35,11 +46,16 @@ function read(options, callback) {
             let path = option.path,
                 mapping = mappings[option.mapping];
 
+            logger.info('begin file reading: %s', path);
+
             let promise = new Promise((resolve, reject) => {
                 this.readSingleFile(path, mapping, (err, data) => {
                     if(err) {
+                        logger.error('error while file reading: %s ; err: %j', path, err);
                         promise.reject(err);
                     }
+
+                    logger.info('file read successfully records num: %s', data.length);
 
                     resolve(data);
                 });
@@ -49,6 +65,9 @@ function read(options, callback) {
         });
 
         Promise.all(promises).then(results => {
+            logger.info('files reading promise resolved');
+
+            // TODO: fing main entity, and make relation between main and secondary entities,  return Array[main entity]
             let mainCollectionIndex = options.files.findIndex(i => i.isMain),
                 mainCollection = results[mainCollectionIndex];
 
@@ -56,7 +75,7 @@ function read(options, callback) {
 
             callback(null, mainCollection);
         }).catch(err => {
-            // TODO
+            logger.info('files reading promise rejected with: %j', err);
         })
     });
 }
