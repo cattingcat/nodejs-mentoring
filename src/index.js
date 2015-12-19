@@ -20,11 +20,10 @@ let options = {
     config: __dirname + '/config.xml'
 };
 
-let reader = new Reader();
+ let reader = new Reader();
 // let reader = new StreamReader();
 
 reader.init(options, function(err, o) {
-
     var cons = readline.createInterface({
         input: process.stdin,
         output: process.stdout

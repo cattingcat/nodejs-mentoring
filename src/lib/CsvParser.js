@@ -57,7 +57,6 @@ function stateParser(line) {
             }
 
             if(state == 1) {
-                console.log(state)
                 throw new SyntaxError(' CSV format exception, closed quote(") missed');
             }
 

@@ -20,7 +20,7 @@ function readSingleFile(filename, mapping, callback) {
             lines = str.split('\n'),
             len = lines.length;
 
-        tail = lines[len - 1];
+        tail = lines.pop();
 
         let objects = lines.map(l => {
             let arr = this.parser.parse(l),

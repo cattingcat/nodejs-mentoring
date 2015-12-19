@@ -2,12 +2,13 @@
 
 const
     fs = require('fs'),
+    asyncjs = require('async'),
     CsvParser = require('./CsvParser.js').get('state'),
     ConfigReader = require('./XmlConfigReader.js').ConfigReader,
     Mapper = require('./Mapper.js').Mapper,
     logger = require('./Logger.js').logger;
 
-function readSingleFile(path, mapping, callback) {
+function readDataFile(path, mapping, callback) {
     logger.info('begin reading file: %s', path);
 
     fs.readFile(path, (err, data) => {
@@ -16,67 +17,98 @@ function readSingleFile(path, mapping, callback) {
 
         logger.info('done reading file: %s', path);
 
-        let objects = lines.map(i => {
-            let csvString = i.replace('\r', ''),
-                csvArr = this.parser.parse(csvString),
-                obj = this.mapper.map(csvArr, mapping);
-
-            return obj;
-        });
+        let objects = this.processLines(lines, mapping);
 
         logger.info('done mapping objects from file: %s', path);
         callback(null, objects);
     });
 }
 
-function read(options, callback) {
+function readFiles(options, callback) {
+    // read config-file, and files with data
     logger.info('#read() wjth options: %j', options);
 
-    this.configReader.readMappings(options.config, (err, mappings) => {
+    let configFileName = options.config,
+        dataFiles = options.files;
+
+    // config-file loaded
+    this.configReader.readMappings(configFileName, (err, mappings) => {
         if(err) {
             logger.error('error while config-file readign: %j', err);
             callback(err);
         }
-
         logger.info('done config-file reading; mappings: %j', mappings);
 
-        let promises = [];
-
-        options.files.forEach(option => {
-            let path = option.path,
-                mapping = mappings[option.mapping];
+        // run loading data-files
+        let promises = dataFiles.map(file => {
+            let path = file.path,
+                mapping = mappings[file.mapping];
 
             logger.info('begin file reading: %s', path);
 
-            let promise = new Promise((resolve, reject) => {
-                this.readSingleFile(path, mapping, (err, data) => {
+            let p = new Promise((resolve, reject) => {
+                // read and parse one data-file
+                this.readDataFile(path, mapping, (err, data) => {
                     if(err) {
                         logger.error('error while file reading: %s ; err: %j', path, err);
                         promise.reject(err);
                     }
-
                     logger.info('file read successfully records num: %s', data.length);
 
                     resolve(data);
                 });
             });
 
-            promises.push(promise);
+            return p;
         });
 
-        Promise.all(promises).then(results => {
+        // all data-filed loaded
+        Promise.all(promises).then(dataFilesRes => {
             logger.info('files reading promise resolved');
 
-            // TODO: fing main entity, and make relation between main and secondary entities,  return Array[main entity]
-            let mainCollectionIndex = options.files.findIndex(i => i.isMain),
-                mainCollection = results[mainCollectionIndex];
+            // pack mappings, result collections and names of collections
+            let res = dataFiles.map((v, i) => {
+                return {
+                    name: v.mapping,
+                    mapping: mappings[v.mapping],
+                    collection: dataFilesRes[i]
+                };
+            });
 
-                this.mapper.processRelations(options.files, results, mappings);
-
-            callback(null, mainCollection);
+            callback(null, res);
         }).catch(err => {
-            logger.info('files reading promise rejected with: %j', err);
+            logger.error('files reading promise rejected with: %j', err);
+            callback(err);
         })
+    });
+}
+
+function processLines(lines, mapping) {
+    return lines.map(i => {
+        let csvString = i.replace('\r', ''),
+            csvArr = this.parser.parse(csvString),
+            obj = this.mapper.map(csvArr, mapping);
+
+        return obj;
+    });
+}
+
+function read(options, callback) {
+    let resInd = options.files.findIndex(i => i.isMain);
+
+    this.readFiles(options, (err, data) => {
+        if(err) {
+            logger.error('files reading err: %j', err);
+            callback(err);
+        }
+        let mainResult = data[resInd];
+
+        // find relations between collections
+        //this.mapper.processRelations(data);
+        //callback(null, mainResult.collection);
+
+        let proc = this.mapper.getRelationProcessor(data, mainResult.name);
+        asyncjs.map(mainResult.collection, proc, callback);
     });
 }
 
@@ -136,7 +168,9 @@ function CsvReader() {
 }
 
 CsvReader.prototype.read = read;
-CsvReader.prototype.readSingleFile = readSingleFile;
+CsvReader.prototype.readFiles = readFiles;
+CsvReader.prototype.readDataFile = readDataFile;
+CsvReader.prototype.processLines = processLines;
 
 CsvReader.prototype.init = init;
 CsvReader.prototype.get = get;

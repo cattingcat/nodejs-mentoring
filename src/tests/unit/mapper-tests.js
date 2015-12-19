@@ -152,123 +152,154 @@ describe('Mapper', function () {
     });
 
     describe('#processRelations()', function () {
-        let map2 =  [
-            [{ name: 'a' }],
-            [{ name: 'b' }]
-        ];
-        let objects2 = [
-            {a: 'a', b: 'b'}, {a: 'a1', b: 'b1'}, {a: 'a2', b: 'b2'}
-        ];
+        let map1,
+            map2 =  [
+                [{ name: 'a' }],
+                [{ name: 'b' }]
+            ];
+        let objects1,
+            objects2 = [
+                {a: 'a', b: 'b'}, {a: 'a1', b: 'b1'}, {a: 'a2', b: 'b2'}
+            ];
 
         it('should process simple 1 to 1 relation', function() {
-            let map1 = [
+            map1 = [
                 [{ name: 'first' }],
                 [{ name: 'second' }],
                 [{ name: 'relation' }],
                 [{ name: 'relationObj', relatedTo: 'map2', property: 'relation', relatedProperty: 'a' }]
             ];
-            let objects1 = [
+            objects1 = [
                 {
                     first: 1,
                     second: 2,
                     relation: 'a1'
                 }
             ];
+
             let options = [
-                {mapping: 'map1'}, {mapping: 'map2'}
+                {
+                    name: 'map1',
+                    mapping: map1,
+                    collection: objects1
+                },
+                {
+                    name: 'map2',
+                    mapping: map2,
+                    collection: objects2
+                },
             ];
 
-            let arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+            let arrs = mapper.processRelations(options);
 
-            expect(arrs[0]).to.equal(objects1);
-            expect(arrs[1]).to.equal(objects2);
+            expect(arrs[0].collection).to.equal(objects1);
+            expect(arrs[1].collection).to.equal(objects2);
 
-            expect(arrs[0][0]).to.equal(objects1[0]);
+            expect(arrs[0].collection[0]).to.equal(objects1[0]);
 
-            expect(arrs[0][0].relationObj).to.equal(objects2[1]);
+            expect(arrs[0].collection[0].relationObj).to.equal(objects2[1]);
 
-            expect(arrs[0][0].relationObj.a).to.equal('a1');
+            expect(arrs[0].collection[0].relationObj.a).to.equal('a1');
         });
 
         it('should process simple 1 to 1 relation with nesting at recipient entity', function() {
-            let map1 = [
+            map1 = [
                 [{ name: 'first' }],
                 [{ name: 'second' }],
                 [{ name: 'relation' }],
                 [{name: 'nesting'},
                     { name: 'relationObj', relatedTo: 'map2', property: 'relation', relatedProperty: 'a' }]
             ];
-            let objects1 = [
+            objects1 = [
                 {
                     first: 1,
                     second: 2,
                     relation: 'a1'
                 }
             ];
+
             let options = [
-                {mapping: 'map1'}, {mapping: 'map2'}
+                {
+                    name: 'map1',
+                    mapping: map1,
+                    collection: objects1
+                },
+                {
+                    name: 'map2',
+                    mapping: map2,
+                    collection: objects2
+                },
             ];
 
-            let arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+            let arrs = mapper.processRelations(options);
 
-            expect(arrs[0]).to.equal(objects1);
-            expect(arrs[1]).to.equal(objects2);
+            expect(arrs[0].collection).to.equal(objects1);
+            expect(arrs[1].collection).to.equal(objects2);
 
-            expect(arrs[0][0]).to.equal(objects1[0]);
+            expect(arrs[0].collection[0]).to.equal(objects1[0]);
 
-            expect(arrs[0][0].nesting.relationObj).to.equal(objects2[1]);
+            expect(arrs[0].collection[0].nesting.relationObj).to.equal(objects2[1]);
 
-            expect(arrs[0][0].nesting.relationObj.a).to.equal('a1');
+            expect(arrs[0].collection[0].nesting.relationObj.a).to.equal('a1');
         });
 
         it('should process simple 1 to 1 relation with nesting at donor entity', function() {
-            let map1 = [
+            map1 = [
                 [{ name: 'first' }],
                 [{ name: 'second' }],
                 [{ name: 'relation' }],
                 [{ name: 'relationObj', relatedTo: 'map2', property: 'relation', relatedProperty: 'nested.a' }]
             ];
-            let objects1 = [
+            objects1 = [
                 {
                     first: 1,
                     second: 2,
                     relation: 'a1'
                 }
             ];
-            let map2 =  [
+            map2 =  [
                 [{name: 'nested'}, { name: 'a' }],
                 [{ name: 'b' }]
             ];
-            let objects2 = [
+            objects2 = [
                 {nested: { a: 'a'  }, b: 'b'},
                 {nested: { a: 'a1' }, b: 'b1'},
                 {nested: { a: 'a2' }, b: 'b2'}
             ];
 
             let options = [
-                {mapping: 'map1'}, {mapping: 'map2'}
+                {
+                    name: 'map1',
+                    mapping: map1,
+                    collection: objects1
+                },
+                {
+                    name: 'map2',
+                    mapping: map2,
+                    collection: objects2
+                },
             ];
 
-            let arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+            let arrs = mapper.processRelations(options);
 
-            expect(arrs[0]).to.equal(objects1);
-            expect(arrs[1]).to.equal(objects2);
+            expect(arrs[0].collection).to.equal(objects1);
+            expect(arrs[1].collection).to.equal(objects2);
 
-            expect(arrs[0][0]).to.equal(objects1[0]);
+            expect(arrs[0].collection[0]).to.equal(objects1[0]);
 
-            expect(arrs[0][0].relationObj).to.equal(objects2[1]);
+            expect(arrs[0].collection[0].relationObj).to.equal(objects2[1]);
 
-            expect(arrs[0][0].relationObj.nested.a).to.equal('a1');
+            expect(arrs[0].collection[0].relationObj.nested.a).to.equal('a1');
         });
 
         it('should throws error if arguments incorrect', function() {
-            let map1 = [
+            map1 = [
                 [{ name: 'first' }],
                 [{ name: 'second' }],
                 [{ name: 'relation' }],
                 [{ name: 'relationObj', relatedTo: 'map2', property: 'relation', relatedProperty: 'a' }]
             ];
-            let objects1 = [
+            objects1 = [
                 {
                     first: 1,
                     second: 2,
@@ -276,16 +307,20 @@ describe('Mapper', function () {
                 }
             ];
             let options = [
-                {mapping: 'map1'} // error, only one mapping
+                {
+                    name: 'map1',
+                    mapping: map1,
+                    collection: objects1
+                }
             ];
 
             let arrs;
             expect(() => {
-                arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+                arrs = mapper.processRelations(options);
             }).to.throw(MapperError)
 
             expect(() => {
-                arrs = mapper.processRelations(options, [objects1, objects2], {map1: map1, map2: map2});
+                arrs = mapper.processRelations(options);
             }).to.throw(Error)
         });
     });

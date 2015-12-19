@@ -1,4 +1,5 @@
 'use strict';
+
 const
     exceptions = require('./Exceptions.js'),
     MapperError = exceptions.MapperError;
@@ -100,38 +101,70 @@ function toArray(obj, mapping) {
     return array;
 }
 
-function processRelations(arrayToMap, arrays, mappings) {
-    if(arrayToMap.length != arrays.length)
-        throw new MapperError('Mappings count isnt equals to result arrays count');
+function processRelations(options) {
 
-    arrayToMap.forEach((arrMapItem, index) => {
-        let currArray = arrays[index],
-            currMap = mappings[arrMapItem.mapping];
+    options.forEach(item => {
+        let name = item.name,
+            collection = item.collection,
+            mapping = item.mapping;
 
-        if(!currMap) throw new MapperError('Mapping isnt exist');
+        if(!mapping) throw new MapperError('Mapping isnt exist');
 
-        currMap.forEach(path => {
+
+        mapping.forEach(path => {
             let info = relationInfo(path);
+            if(!info.isRelation) return;
 
-            if(info.isRelation) {
-                let relatedIndex = arrayToMap.findIndex(i => i.mapping == info.relatedTo),
-                    relatedArr = arrays[relatedIndex];
+            let relOpt = options.find(i => i.name == info.relatedTo);
 
-                currArray.forEach(item => {
-                    let myRelatedVal = item[info.property],
-                        relatedObjProp = info.relatedProperty,
-                        propPath = relatedObjProp.split('.');
+            if(!relOpt) throw new MapperError('related mapping isnt exist');
 
-                    let innerObj = relatedArr.find(i => getProperty(i, propPath) == myRelatedVal);
+            let relColl = relOpt.collection,
+                mainPath = path.map(i => i.name);
 
-                    setProperty(item, path.map(i => i.name), innerObj);
-                });
-            }
+            collection.forEach(item => {
+                let mainVal = item[info.property],
+                    relPath = info.relatedProperty,
+                    relPropPath = relPath.split('.');
+
+                let innerObj = relColl.find(i => getProperty(i, relPropPath) == mainVal);
+
+                setProperty(item, mainPath, innerObj);
+            });
         });
     });
 
-    return arrays;
+    return options;
 }
+
+function getRelationProcessor(options, mappingName) {
+    let mapping = options.find(i => i.name == mappingName).mapping;
+
+    return function(item, callback) {
+        mapping.forEach(path => {
+            let info = relationInfo(path);
+            if(!info.isRelation) return;
+
+            let relOpt = options.find(i => i.name == info.relatedTo);
+
+            if(!relOpt) throw new MapperError('related mapping isnt exist');
+
+            let relColl = relOpt.collection,
+                mainPath = path.map(i => i.name);
+
+            let mainVal = item[info.property],
+                relPath = info.relatedProperty,
+                relPropPath = relPath.split('.');
+
+            let innerObj = relColl.find(i => getProperty(i, relPropPath) == mainVal);
+
+            setProperty(item, mainPath, innerObj);
+        });
+
+        callback(null, item);
+    }
+}
+
 
 function Mapper() { }
 Mapper.prototype.map = toObject;
@@ -140,5 +173,6 @@ Mapper.prototype.getProperty = getProperty;
 Mapper.prototype.toObject = toObject;
 Mapper.prototype.toArray = toArray;
 Mapper.prototype.processRelations = processRelations;
+Mapper.prototype.getRelationProcessor = getRelationProcessor;
 
 exports.Mapper = Mapper;
