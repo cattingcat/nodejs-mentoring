@@ -78,8 +78,9 @@ function toObject(arr, mapping) {
 }
 
 function toArray(obj, mapping) {
-    let array = [];
+    if(typeof obj != 'object') throw new MapperError('Wrong obj argument');
 
+    let array = [];
 
     let arrayIndex = 0;
     mapping.forEach(path => {

@@ -105,6 +105,34 @@ describe('Mapper', function () {
             expect(arr[1]).to.equal(obj.c);
             expect(arr[2]).to.equal(obj.a);
         });
+
+        it('should process mapping with nested properties', function() {
+            let obj = {a:1, b:{d: 3}, c:2};
+            let mapping = [
+                [{name: 'a'}],
+                [{name: 'b'}, {name: 'd'}],
+                [{name: 'c'}]
+            ];
+
+            let arr = mapper.toArray(obj, mapping);
+
+            expect(arr[0]).to.equal(obj.a);
+            expect(arr[1]).to.equal(obj.b.d);
+            expect(arr[2]).to.equal(obj.c);
+        });
+
+        it('should process mapping with not all properties', function() {
+            let obj = {a:1, c:{d: 3}};
+            let mapping = [
+                [{name: 'a'}],
+                [{name: 'c'}, {name: 'd'}],
+            ];
+
+            let arr = mapper.toArray(obj, mapping);
+
+            expect(arr[0]).to.equal(obj.a);
+            expect(arr[1]).to.equal(obj.c.d);
+        });
     });
 
     describe('#map()', function () {
