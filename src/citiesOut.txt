@@ -1,2 +1,3 @@
 Samara,Russia,-240
 Windhoek,Namibia,-60
+Moscow,Russia,-240

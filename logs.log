@@ -1847,3 +1847,68 @@
 {"level":"info","message":"done mapping objects from file: /home/pc-1/Desktop/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-20T16:47:34.343Z"}
 {"level":"info","message":"file read successfully records num: 123","timestamp":"2015-12-20T16:47:34.343Z"}
 {"level":"info","message":"files reading promise resolved","timestamp":"2015-12-20T16:47:34.344Z"}
+{"level":"info","message":"logger instaled","timestamp":"2015-12-26T07:48:06.591Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities.txt","mapping":"city","isMain":true},{"path":"/home/pc-1/nodejs-mentoring/src/../data/timezones.txt","mapping":"timezone"}],"config":"/home/pc-1/nodejs-mentoring/src/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2015-12-26T07:48:06.602Z"}
+{"city":[[{"name":"name","index":"0"}],[{"name":"timeZoneInfo","index":"1"}],[{"name":"country","index":"2"}],[{"name":"coords"},{"name":"x","index":"3"}],[{"$ref":"$[\"city\"][3][0]"},{"name":"y","index":"4"}],[{"name":"timeZoneName","index":"5"}],[{"name":"timeZone","property":"timeZoneName","relatedTo":"timezone","relatedProperty":"name"}]],"timezone":[[{"name":"code"}],[{"name":"name"}],[{"name":"gmtOffsetInfo"}],[{"name":"offset"}],[{"name":"name2"}],[{"name":"magicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num5"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num6"}],[{"name":"time"}],[{"name":"daylightTimeName"}],[{"name":"daylightOffset"}],[{"name":"dayloghtMagicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num5"}],[{"name":"daylightTime"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2015-12-26T07:48:06.658Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T07:48:06.660Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T07:48:06.662Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T07:48:06.663Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T07:48:06.663Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T07:48:06.695Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T07:48:06.767Z"}
+{"level":"info","message":"file read successfully records num: 1332","timestamp":"2015-12-26T07:48:06.767Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T07:48:06.769Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T07:48:06.776Z"}
+{"level":"info","message":"file read successfully records num: 123","timestamp":"2015-12-26T07:48:06.777Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2015-12-26T07:48:06.777Z"}
+{"durationMs":20,"level":"info","message":"command","timestamp":"2015-12-26T07:48:10.946Z"}
+{"durationMs":28,"level":"info","message":"command","timestamp":"2015-12-26T07:48:13.867Z"}
+{"level":"info","message":"logger instaled","timestamp":"2015-12-26T11:59:41.014Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities.txt","mapping":"city","isMain":true},{"path":"/home/pc-1/nodejs-mentoring/src/../data/timezones.txt","mapping":"timezone"}],"config":"/home/pc-1/nodejs-mentoring/src/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2015-12-26T11:59:41.049Z"}
+{"city":[[{"name":"name","index":"0"}],[{"name":"timeZoneInfo","index":"1"}],[{"name":"country","index":"2"}],[{"name":"coords"},{"name":"x","index":"3"}],[{"$ref":"$[\"city\"][3][0]"},{"name":"y","index":"4"}],[{"name":"timeZoneName","index":"5"}],[{"name":"timeZone","property":"timeZoneName","relatedTo":"timezone","relatedProperty":"name"}]],"timezone":[[{"name":"code"}],[{"name":"name"}],[{"name":"gmtOffsetInfo"}],[{"name":"offset"}],[{"name":"name2"}],[{"name":"magicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num5"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num6"}],[{"name":"time"}],[{"name":"daylightTimeName"}],[{"name":"daylightOffset"}],[{"name":"dayloghtMagicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num5"}],[{"name":"daylightTime"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2015-12-26T11:59:41.104Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T11:59:41.109Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T11:59:41.110Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T11:59:41.114Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T11:59:41.114Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T11:59:41.159Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T11:59:41.278Z"}
+{"level":"info","message":"file read successfully records num: 1332","timestamp":"2015-12-26T11:59:41.279Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T11:59:41.282Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T11:59:41.294Z"}
+{"level":"info","message":"file read successfully records num: 123","timestamp":"2015-12-26T11:59:41.295Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2015-12-26T11:59:41.295Z"}
+{"durationMs":36,"level":"info","message":"command","timestamp":"2015-12-26T11:59:48.866Z"}
+{"durationMs":5,"level":"info","message":"command","timestamp":"2015-12-26T12:00:01.590Z"}
+{"durationMs":5,"level":"info","message":"command","timestamp":"2015-12-26T12:00:03.554Z"}
+{"durationMs":9,"level":"info","message":"command","timestamp":"2015-12-26T12:00:04.767Z"}
+{"level":"info","message":"logger instaled","timestamp":"2015-12-26T12:23:25.263Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities.txt","mapping":"city","isMain":true},{"path":"/home/pc-1/nodejs-mentoring/src/../data/timezones.txt","mapping":"timezone"}],"config":"/home/pc-1/nodejs-mentoring/src/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2015-12-26T12:23:25.282Z"}
+{"city":[[{"name":"name","index":"0"}],[{"name":"timeZoneInfo","index":"1"}],[{"name":"country","index":"2"}],[{"name":"coords"},{"name":"x","index":"3"}],[{"$ref":"$[\"city\"][3][0]"},{"name":"y","index":"4"}],[{"name":"timeZoneName","index":"5"}],[{"name":"timeZone","property":"timeZoneName","relatedTo":"timezone","relatedProperty":"name"}]],"timezone":[[{"name":"code"}],[{"name":"name"}],[{"name":"gmtOffsetInfo"}],[{"name":"offset"}],[{"name":"name2"}],[{"name":"magicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num5"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num6"}],[{"name":"time"}],[{"name":"daylightTimeName"}],[{"name":"daylightOffset"}],[{"name":"dayloghtMagicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num5"}],[{"name":"daylightTime"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2015-12-26T12:23:25.346Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:23:25.353Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:23:25.360Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:23:25.363Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:23:25.365Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:23:25.429Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:23:25.519Z"}
+{"level":"info","message":"file read successfully records num: 1332","timestamp":"2015-12-26T12:23:25.520Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:23:25.521Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:23:25.528Z"}
+{"level":"info","message":"file read successfully records num: 123","timestamp":"2015-12-26T12:23:25.528Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2015-12-26T12:23:25.529Z"}
+{"durationMs":37,"level":"info","message":"command","timestamp":"2015-12-26T12:23:28.194Z"}
+{"durationMs":5,"level":"info","message":"command","timestamp":"2015-12-26T12:34:54.544Z"}
+{"level":"info","message":"logger instaled","timestamp":"2015-12-26T12:50:34.387Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities.txt","mapping":"city","isMain":true},{"path":"/home/pc-1/nodejs-mentoring/src/../data/timezones.txt","mapping":"timezone"}],"config":"/home/pc-1/nodejs-mentoring/src/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2015-12-26T12:50:34.396Z"}
+{"city":[[{"name":"name","index":"0"}],[{"name":"timeZoneInfo","index":"1"}],[{"name":"country","index":"2"}],[{"name":"coords"},{"name":"x","index":"3"}],[{"$ref":"$[\"city\"][3][0]"},{"name":"y","index":"4"}],[{"name":"timeZoneName","index":"5"}],[{"name":"timeZone","property":"timeZoneName","relatedTo":"timezone","relatedProperty":"name"}]],"timezone":[[{"name":"code"}],[{"name":"name"}],[{"name":"gmtOffsetInfo"}],[{"name":"offset"}],[{"name":"name2"}],[{"name":"magicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num5"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num6"}],[{"name":"time"}],[{"name":"daylightTimeName"}],[{"name":"daylightOffset"}],[{"name":"dayloghtMagicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num5"}],[{"name":"daylightTime"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2015-12-26T12:50:34.459Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:50:34.466Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:50:34.468Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:50:34.476Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:50:34.476Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:50:34.510Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2015-12-26T12:50:34.598Z"}
+{"level":"info","message":"file read successfully records num: 1332","timestamp":"2015-12-26T12:50:34.598Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:50:34.600Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2015-12-26T12:50:34.613Z"}
+{"level":"info","message":"file read successfully records num: 123","timestamp":"2015-12-26T12:50:34.614Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2015-12-26T12:50:34.614Z"}
+{"durationMs":34,"level":"info","message":"command","timestamp":"2015-12-26T12:50:36.606Z"}

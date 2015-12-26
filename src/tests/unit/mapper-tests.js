@@ -73,6 +73,48 @@ describe('Mapper', function () {
             expect(obj.b).to.equal(1);
             expect(obj.c).to.equal(2);
         });
+
+        it('should map simple linear objects', function() {
+            let map = [
+                [{ name: 'first' }],
+                [{ name: 'second' }],
+                [{ name: 'third' }]
+            ];
+
+            let arr = [1, 2, 3];
+
+            let obj = mapper.toObject(arr, map);
+
+            obj.should.have.property('first');
+            obj.should.have.property('second');
+            obj.should.have.property('third');
+
+            expect(obj.first).to.equal(1);
+            expect(obj.second).to.equal(2);
+            expect(obj.third).to.equal(3);
+        });
+
+        it('should map nested objects', function() {
+            let map = [
+                [{ name: 'first' }],
+                [{ name: 'nested' }, {name: 'second'}],
+                [{ name: 'third' }]
+            ];
+
+            let arr = [1, 2, 3];
+
+            let obj = mapper.toObject(arr, map);
+
+            obj.should.have.property('first');
+            obj.should.have.property('nested');
+            obj.should.have.property('third');
+
+            (obj.nested).should.have.property('second');
+
+            expect(obj.first).to.equal(1);
+            expect(obj.nested.second).to.equal(2);
+            expect(obj.third).to.equal(3);
+        });
     });
 
     describe('#toArray()', function () {
@@ -125,57 +167,13 @@ describe('Mapper', function () {
             let obj = {a:1, c:{d: 3}};
             let mapping = [
                 [{name: 'a'}],
-                [{name: 'c'}, {name: 'd'}],
+                [{name: 'c'}, {name: 'd'}]
             ];
 
             let arr = mapper.toArray(obj, mapping);
 
             expect(arr[0]).to.equal(obj.a);
             expect(arr[1]).to.equal(obj.c.d);
-        });
-    });
-
-    describe('#map()', function () {
-        it('should map simple linear objects', function() {
-            let map = [
-                [{ name: 'first' }],
-                [{ name: 'second' }],
-                [{ name: 'third' }]
-            ];
-
-            let arr = [1, 2, 3];
-
-            let obj = mapper.map(arr, map);
-
-            obj.should.have.property('first');
-            obj.should.have.property('second');
-            obj.should.have.property('third');
-
-            expect(obj.first).to.equal(1);
-            expect(obj.second).to.equal(2);
-            expect(obj.third).to.equal(3);
-        });
-
-        it('should map nested objects', function() {
-            let map = [
-                [{ name: 'first' }],
-                [{ name: 'nested' }, {name: 'second'}],
-                [{ name: 'third' }]
-            ];
-
-            let arr = [1, 2, 3];
-
-            let obj = mapper.map(arr, map);
-
-            obj.should.have.property('first');
-            obj.should.have.property('nested');
-            obj.should.have.property('third');
-
-            (obj.nested).should.have.property('second');
-
-            expect(obj.first).to.equal(1);
-            expect(obj.nested.second).to.equal(2);
-            expect(obj.third).to.equal(3);
         });
     });
 
@@ -215,7 +213,7 @@ describe('Mapper', function () {
                     name: 'map2',
                     mapping: map2,
                     collection: objects2
-                },
+                }
             ];
 
             let arrs = mapper.processRelations(options);
@@ -256,7 +254,7 @@ describe('Mapper', function () {
                     name: 'map2',
                     mapping: map2,
                     collection: objects2
-                },
+                }
             ];
 
             let arrs = mapper.processRelations(options);
@@ -305,7 +303,7 @@ describe('Mapper', function () {
                     name: 'map2',
                     mapping: map2,
                     collection: objects2
-                },
+                }
             ];
 
             let arrs = mapper.processRelations(options);
@@ -345,11 +343,11 @@ describe('Mapper', function () {
             let arrs;
             expect(() => {
                 arrs = mapper.processRelations(options);
-            }).to.throw(MapperError)
+            }).to.throw(MapperError);
 
             expect(() => {
                 arrs = mapper.processRelations(options);
-            }).to.throw(Error)
+            }).to.throw(Error);
         });
     });
 });

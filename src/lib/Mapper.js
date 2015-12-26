@@ -163,7 +163,7 @@ function getRelationProcessor(options, mappingName) {
         });
 
         callback(null, item);
-    }
+    };
 }
 
 
