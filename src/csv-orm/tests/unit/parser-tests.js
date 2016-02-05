@@ -3,7 +3,7 @@
 const
     chai = require("chai"),
     expect = chai.expect,
-    parserLib = require('../../lib/CsvParser.js'),
+    parserLib = require('../../src/CsvParser.js'),
     Parser = parserLib.get('state');
 
 chai.should();

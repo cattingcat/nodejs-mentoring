@@ -1,6 +1,5 @@
 'use strict';
 
-
 function MapperError(msg) {
     this.message = msg;
     this.name = 'MapperError';

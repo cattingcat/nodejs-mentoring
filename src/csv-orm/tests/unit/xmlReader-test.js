@@ -3,7 +3,7 @@
 const
     chai = require("chai"),
     expect = chai.expect,
-    ConfigReader = require('../../lib/XmlConfigReader.js').ConfigReader;
+    ConfigReader = require('../../src/XmlConfigReader.js').ConfigReader;
 
 chai.should();
 

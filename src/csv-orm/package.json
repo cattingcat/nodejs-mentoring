@@ -1,0 +1,35 @@
+{
+  "name": "csv-orm",
+  "version": "1.0.0",
+  "description": "mapping CSV to JS-objects",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha ./tests/unit/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zxc123zxc/nodejs-mentoring.git"
+  },
+  "keywords": [
+    "CSV",
+    "Nodejs"
+  ],
+  "author": "Mark_martynov@epam.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zxc123zxc/nodejs-mentoring/issues"
+  },
+  "homepage": "https://github.com/zxc123zxc/nodejs-mentoring#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
+  "dependencies": {
+    "async": "^1.5.0",
+    "winston": "^2.1.1",
+    "xml2js": "^0.4.15"
+  }
+}

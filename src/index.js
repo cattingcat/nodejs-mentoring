@@ -2,11 +2,10 @@
 const
     readline = require('readline'),
     fs = require('fs'),
-    asyncjs = require('async'),
-    Reader =  require('./lib/CsvFsReader.js').CsvReader,
-    Mapper = require('./lib/Mapper.js').Mapper,
-    StreamReader = require('./lib/CsvStreamReader.js').CsvReader,
-    logger = require('./lib/Logger.js').logger;
+    //asyncjs = require('async'),
+    Reader =  require('./csv-orm').Reader,
+    Mapper = require('./csv-orm').Mapper;
+
 
 let options = {
     files:[
@@ -23,9 +22,7 @@ let options = {
     config: __dirname + '/config.xml'
 };
 
- let reader = new Reader();
-// let reader = new StreamReader();
-
+let reader = new Reader();
 reader.init(options, function(err, o) {
     var cons = readline.createInterface({
         input: process.stdin,
@@ -33,29 +30,26 @@ reader.init(options, function(err, o) {
     });
 
     cons.on('line', function(input) {
-        logger.profile('command');
-
-        if(input.indexOf('file') != -1) {
+        /*if(input.indexOf('file') != -1) {
             let inFile = __dirname + '/cities.txt',
                 outFile = __dirname + '/citiesOut.txt';
             fromFile(inFile, outFile, o);
             return;
-        }
+        }*/
 
         let obj = o.get({field: 'name', ignoreCase: true, value: input});
 
         if(obj.length == 0) {
             obj = o.get({field: 'name', ignoreCase: true, substr: true, value: input});
             console.log('maybe you mean: ', obj.map(i => i.name));
-            logger.profile('command');
             return;
         }
 
         console.log(obj);
-        logger.profile('command');
     });
 });
 
+/*
 function fromFile(inFile, outFile, infoGetter) {
     fs.readFile(inFile, (err, data) => {
         let str = data.toString(),
@@ -88,3 +82,4 @@ function fromFile(inFile, outFile, infoGetter) {
         });
     });
 }
+*/

@@ -3,8 +3,8 @@
 const
     chai = require("chai"),
     expect = chai.expect,
-    Mapper = require('../../lib/Mapper.js').Mapper,
-    exceptions = require('../../lib/Exceptions.js'),
+    Mapper = require('../../src/Mapper.js').Mapper,
+    exceptions = require('../../src/Exceptions.js'),
     MapperError = exceptions.MapperError;
 
 chai.should();
