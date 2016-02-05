@@ -17,6 +17,7 @@ reader.readMappings(__dirname + '/data/test-config.xml', function(err, mappings)
                 mappings.should.have.property('onePropMapping');
                 mappings.should.have.property('lineMapping');
                 mappings.should.have.property('treeMapping');
+				mappings.should.have.property('mappingWithRest');
             });
 
             it('should read onePropMapping correctly', function() {
@@ -56,6 +57,16 @@ reader.readMappings(__dirname + '/data/test-config.xml', function(err, mappings)
                     let nesting = item.length;
                     nesting.should.equal(nestings[index]);
                 });
+            });
+
+			it('should read mappingWithRest correctly', function() {
+                let map = mappings.mappingWithRest;
+
+                let propertyCount = map.length;
+                propertyCount.should.equal(3);
+
+				var restProp = map[2][0];
+        		restProp.type.should.equal('rest');
             });
         });
     });

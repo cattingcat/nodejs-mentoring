@@ -20,4 +20,10 @@
         </property>
         <property name="timeZoneName" />
     </mapping>
+
+	<mapping name="mappingWithRest">
+		<property name="prop1" />
+		<property name="prop2" />
+        <property name="restProp" type="rest" />
+	</mapping>
 </root>

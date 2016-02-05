@@ -1,14 +1,41 @@
-{"level":"info","message":"logger instaled","timestamp":"2016-02-05T16:20:00.349Z"}
-{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities.txt","mapping":"city","isMain":true},{"path":"/home/pc-1/nodejs-mentoring/src/../data/timezones.txt","mapping":"timezone"}],"config":"/home/pc-1/nodejs-mentoring/src/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-05T16:20:00.359Z"}
-{"city":[[{"name":"name","index":"0"}],[{"name":"timeZoneInfo","index":"1"}],[{"name":"country","index":"2"}],[{"name":"coords"},{"name":"x","index":"3"}],[{"$ref":"$[\"city\"][3][0]"},{"name":"y","index":"4"}],[{"name":"timeZoneName","index":"5"}],[{"name":"timeZone","property":"timeZoneName","relatedTo":"timezone","relatedProperty":"name"}]],"timezone":[[{"name":"code"}],[{"name":"name"}],[{"name":"gmtOffsetInfo"}],[{"name":"offset"}],[{"name":"name2"}],[{"name":"magicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num5"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num6"}],[{"name":"time"}],[{"name":"daylightTimeName"}],[{"name":"daylightOffset"}],[{"name":"dayloghtMagicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num5"}],[{"name":"daylightTime"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-05T16:20:00.400Z"}
-{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2016-02-05T16:20:00.403Z"}
-{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2016-02-05T16:20:00.405Z"}
-{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2016-02-05T16:20:00.406Z"}
-{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2016-02-05T16:20:00.406Z"}
-{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2016-02-05T16:20:00.418Z"}
-{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities.txt","timestamp":"2016-02-05T16:20:00.482Z"}
-{"level":"info","message":"file read successfully records num: 1332","timestamp":"2016-02-05T16:20:00.482Z"}
-{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2016-02-05T16:20:00.485Z"}
-{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/timezones.txt","timestamp":"2016-02-05T16:20:00.505Z"}
-{"level":"info","message":"file read successfully records num: 123","timestamp":"2016-02-05T16:20:00.511Z"}
-{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-05T16:20:00.512Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-05T18:14:40.270Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities/cities.txt","mapping":"city","isMain":true},{"path":"/home/pc-1/nodejs-mentoring/src/../data/cities/timezones.txt","mapping":"timezone"}],"config":"/home/pc-1/nodejs-mentoring/src/../data/cities/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-05T18:14:40.281Z"}
+{"city":[[{"name":"name","index":"0"}],[{"name":"timeZoneInfo","index":"1"}],[{"name":"country","index":"2"}],[{"name":"coords"},{"name":"x","index":"3"}],[{"$ref":"$[\"city\"][3][0]"},{"name":"y","index":"4"}],[{"name":"timeZoneName","index":"5"}],[{"name":"timeZone","property":"timeZoneName","relatedTo":"timezone","relatedProperty":"name"}]],"timezone":[[{"name":"code"}],[{"name":"name"}],[{"name":"gmtOffsetInfo"}],[{"name":"offset"}],[{"name":"name2"}],[{"name":"magicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num5"}],[{"$ref":"$[\"timezone\"][5][0]"},{"name":"num6"}],[{"name":"time"}],[{"name":"daylightTimeName"}],[{"name":"daylightOffset"}],[{"name":"dayloghtMagicNumbers"},{"name":"num1"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num2"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num3"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num4"}],[{"$ref":"$[\"timezone\"][14][0]"},{"name":"num5"}],[{"name":"daylightTime"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-05T18:14:40.320Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities/cities.txt","timestamp":"2016-02-05T18:14:40.322Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities/cities.txt","timestamp":"2016-02-05T18:14:40.324Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/cities/timezones.txt","timestamp":"2016-02-05T18:14:40.325Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/cities/timezones.txt","timestamp":"2016-02-05T18:14:40.325Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities/cities.txt","timestamp":"2016-02-05T18:14:40.358Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities/cities.txt","timestamp":"2016-02-05T18:14:40.453Z"}
+{"level":"info","message":"file read successfully records num: 1332","timestamp":"2016-02-05T18:14:40.453Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/cities/timezones.txt","timestamp":"2016-02-05T18:14:40.455Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/cities/timezones.txt","timestamp":"2016-02-05T18:14:40.479Z"}
+{"level":"info","message":"file read successfully records num: 123","timestamp":"2016-02-05T18:14:40.479Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-05T18:14:40.479Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-05T18:29:27.816Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/people/people.csv","mapping":"people","isMain":true}],"config":"/home/pc-1/nodejs-mentoring/src/../data/people/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-05T18:29:27.894Z"}
+{"people":[[{"name":"firstName"}],[{"name":"lastName"}],[{"name":"birthdate"}],[{"name":"addresses","type":"rest"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-05T18:29:27.919Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:29:27.920Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:29:27.922Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:29:27.927Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:29:27.929Z"}
+{"level":"info","message":"file read successfully records num: 5","timestamp":"2016-02-05T18:29:27.929Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-05T18:29:27.931Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-05T18:30:45.316Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/people/people.csv","mapping":"people","isMain":true}],"config":"/home/pc-1/nodejs-mentoring/src/../data/people/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-05T18:30:45.391Z"}
+{"people":[[{"name":"firstName"}],[{"name":"lastName"}],[{"name":"birthdate"}],[{"name":"addresses","type":"rest"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-05T18:30:45.417Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:30:45.418Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:30:45.420Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:30:45.425Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:30:45.427Z"}
+{"level":"info","message":"file read successfully records num: 5","timestamp":"2016-02-05T18:30:45.427Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-05T18:30:45.428Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-05T18:35:30.595Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/people/people.csv","mapping":"people","isMain":true}],"config":"/home/pc-1/nodejs-mentoring/src/../data/people/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-05T18:35:30.694Z"}
+{"people":[[{"name":"firstName"}],[{"name":"lastName"}],[{"name":"birthdate"}],[{"name":"addresses","type":"rest"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-05T18:35:30.726Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:35:30.728Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:35:30.731Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:35:30.737Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-05T18:35:30.740Z"}
+{"level":"info","message":"file read successfully records num: 5","timestamp":"2016-02-05T18:35:30.740Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-05T18:35:30.741Z"}

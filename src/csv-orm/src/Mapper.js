@@ -59,20 +59,32 @@ function relationInfo(path) {
 function toObject(arr, mapping) {
     let obj = {};
 
-    let arrayIndex = 0;
+    let arrayIndex = 0,
+		restArg = null;
     mapping.forEach(path => {
         let info = relationInfo(path),
             stringArrPath = path.map(i => i.name);
 
         if(info.isRelation) {
             setProperty(obj, stringArrPath, 'To be related to ' + info.relatedTo);
-        } else {
+        } else if(info.type == 'rest') {
+			restArg = {
+				info: info,
+				path: stringArrPath
+			};
+		 	return;
+		} else {
             let arrIndex = !isNaN(info.index) ? info.index : arrayIndex;
 
             setProperty(obj, stringArrPath, arr[arrIndex]);
             ++arrayIndex;
         }
     });
+
+	if(restArg) {
+		let restArrItems = arr.slice(arrayIndex);
+		setProperty(obj, restArg.path, restArrItems);
+	}
 
     return obj;
 }
@@ -82,13 +94,18 @@ function toArray(obj, mapping) {
 
     let array = [];
 
-    let arrayIndex = 0;
+    let arrayIndex = 0,
+		restArgs = null;
+
     mapping.forEach(path => {
         let info = relationInfo(path),
             stringArrPath = path.map(i => i.name);
 
         if(info.isRelation) {
             //nop
+		} else if(info.type == 'rest') {
+			restArgs = getProperty(obj, stringArrPath);
+
         } else {
             let arrIndex = !isNaN(info.index) ? info.index : arrayIndex;
 
@@ -98,6 +115,10 @@ function toArray(obj, mapping) {
             ++arrayIndex;
         }
     });
+
+	if(restArgs) {
+		array = array.concat(restArgs);
+	}
 
     return array;
 }

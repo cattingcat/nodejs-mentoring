@@ -350,4 +350,40 @@ describe('Mapper', function () {
             }).to.throw(Error);
         });
     });
+
+	describe('#processRest', function(){
+		it('should process simple rest properties', function() {
+			let mapping = [
+					[{name: 'a'}],
+					[{name: 'b'}],
+					[{name: 'c', type: 'rest'}]
+				],
+				arr = [1, 2, 3, 4, 5, 6, 7];
+
+			let obj = mapper.toObject(arr, mapping);
+
+			expect(obj.c[0]).to.equal(3);
+
+			let arr1 = mapper.toArray(obj, mapping);
+
+			expect(arr1[3]).to.equal(arr[3]);
+		});
+
+		it('should process nested rest properties', function() {
+			let mapping = [
+					[{name: 'a'}],
+					[{name: 'd'}, {name: 'c', type: 'rest'}],
+					[{name: 'b'}]
+				],
+				arr = [1, 2, 3, 4, 5, 6, 7];
+
+			let obj = mapper.toObject(arr, mapping);
+
+			expect(obj.d.c[0]).to.equal(3);
+
+			let arr1 = mapper.toArray(obj, mapping);
+
+			expect(arr1[3]).to.equal(arr[3]);
+		});
+	})
 });

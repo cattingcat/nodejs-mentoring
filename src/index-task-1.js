@@ -1,3 +1,7 @@
+/*
+	Nodejs mentoring task1
+*/
+
 'use strict';
 const
     readline = require('readline'),
@@ -6,20 +10,19 @@ const
     Reader =  require('./csv-orm').Reader,
     Mapper = require('./csv-orm').Mapper;
 
-
 let options = {
     files:[
         {
-            path: __dirname + '/../data/cities.txt',
+            path: __dirname + '/../data/cities/cities.txt',
             mapping: 'city',
             isMain: true
         },
         {
-            path: __dirname + '/../data/timezones.txt',
+            path: __dirname + '/../data/cities/timezones.txt',
             mapping: 'timezone'
         }
     ],
-    config: __dirname + '/config.xml'
+    config: __dirname + '/../data/cities/config.xml'
 };
 
 let reader = new Reader();
@@ -31,8 +34,8 @@ reader.init(options, function(err, o) {
 
     cons.on('line', function(input) {
         /*if(input.indexOf('file') != -1) {
-            let inFile = __dirname + '/cities.txt',
-                outFile = __dirname + '/citiesOut.txt';
+            let inFile = __dirname + '/../data/cities/test/cities.txt',
+                outFile = __dirname + '/../data/cities/test/citiesOut.txt';
             fromFile(inFile, outFile, o);
             return;
         }*/

@@ -47,7 +47,7 @@ function processMapping(mapping) {
     let stack = [],
         res = [];
 
-    stack.push({node: rootProperty, index: 0});
+    stack.push({ node: rootProperty, index: 0 });
 
     while(stack.length != 0) {
         let item = stack.pop(),
