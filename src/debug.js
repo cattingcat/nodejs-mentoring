@@ -10,4 +10,4 @@ const
 
 console.log('Hello world!');
 
-synchronizer.sync();
+synchronizer.createSchema();

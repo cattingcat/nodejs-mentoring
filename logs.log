@@ -2,3 +2,32 @@
 {"level":"info","message":"logger instaled","timestamp":"2016-02-05T18:41:47.651Z"}
 {"level":"info","message":"logger instaled","timestamp":"2016-02-05T18:51:30.324Z"}
 {"level":"info","message":"logger instaled","timestamp":"2016-02-05T19:08:15.093Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T06:31:40.251Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T06:35:55.656Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T06:43:15.125Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/people/people.csv","mapping":"people","isMain":true}],"config":"/home/pc-1/nodejs-mentoring/src/../data/people/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-06T06:43:15.177Z"}
+{"people":[[{"name":"firstName"}],[{"name":"lastName"}],[{"name":"birthdate"}],[{"name":"addresses","type":"rest"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-06T06:43:15.220Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:43:15.224Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:43:15.225Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:43:15.235Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:43:15.238Z"}
+{"level":"info","message":"file read successfully records num: 5","timestamp":"2016-02-06T06:43:15.238Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-06T06:43:15.240Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T06:57:57.310Z"}
+{"files":[{"path":"/home/pc-1/nodejs-mentoring/src/../data/people/people.csv","mapping":"people","isMain":true}],"config":"/home/pc-1/nodejs-mentoring/src/../data/people/config.xml","level":"info","message":"#read() wjth options: %j","timestamp":"2016-02-06T06:57:57.362Z"}
+{"people":[[{"name":"firstName"}],[{"name":"lastName"}],[{"name":"birthdate"}],[{"name":"addresses","type":"rest"}]],"level":"info","message":"done config-file reading; mappings: %j","timestamp":"2016-02-06T06:57:57.391Z"}
+{"level":"info","message":"begin file reading: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:57:57.392Z"}
+{"level":"info","message":"begin reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:57:57.394Z"}
+{"level":"info","message":"done reading file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:57:57.399Z"}
+{"level":"info","message":"done mapping objects from file: /home/pc-1/nodejs-mentoring/src/../data/people/people.csv","timestamp":"2016-02-06T06:57:57.401Z"}
+{"level":"info","message":"file read successfully records num: 5","timestamp":"2016-02-06T06:57:57.402Z"}
+{"level":"info","message":"files reading promise resolved","timestamp":"2016-02-06T06:57:57.403Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:00:49.619Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:02:25.749Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:03:04.670Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:03:43.392Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:05:55.013Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:07:42.429Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:10:07.445Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:11:48.612Z"}
+{"level":"info","message":"logger instaled","timestamp":"2016-02-06T07:12:41.612Z"}

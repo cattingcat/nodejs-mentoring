@@ -4,8 +4,8 @@
   "description": "EPAM NodeJS mentoring",
   "main": "index.js",
   "scripts": {
-    "run-dbg": "node --debug-brk ./src/debug.js",
-    "debugger": "node ./node_modules/node-inspector/bin/inspector.js &"
+    "debug": "node --debug-brk ./src/debug.js",
+    "debugger": "node ./node_modules/node-inspector/bin/inspector.js"
   },
   "author": "mark_martynov@epam.com",
   "license": "ISC",
