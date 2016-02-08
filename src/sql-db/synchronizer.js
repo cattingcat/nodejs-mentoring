@@ -1,7 +1,7 @@
 /*
 	Synchronize CSV to Relational-DB
 */
-'use strict'
+'use strict';
 
 const
 	config = require('./config.json'),
@@ -44,8 +44,6 @@ function selectPeople(client, callback) {
 		for(let mapEntry of map.values()){
 			peopleArray.push(mapEntry);
 		}
-
-	    client.end();
 
 		if(callback) callback(null, peopleArray);
 	});
@@ -101,13 +99,17 @@ function compareObjects(oldPeople, newPeople) {
 	let id = oldPeople.id,
 		objChanges = [];
 
-	if(oldPeople.birthdate != newPeople.birthdate) {
+	let dbDate = oldPeople.birthdate.toLocaleDateString(),
+		csvDate = new Date(newPeople.birthdate).toLocaleDateString();
+
+	if(dbDate != csvDate) {
 		objChanges.push({
 			type: 'update',
 			table: 'people',
 			field: 'birthdate',
 			id: id,
-			value: newPeople.birthdate
+			old: dbDate,
+			value: csvDate
 		});
 	}
 
@@ -130,25 +132,130 @@ function compareObjects(oldPeople, newPeople) {
 		}
 	}
 
-	let addrToDelete = oldPeople.addresses
-		.filter((item, index) => indexes.indexOf(index) == -1);
-
-	objChanges.push({
-		type: 'delete',
-		table: 'addresses',
-		values: addrToDelete
-	});
+	let addrsToDelete = oldPeople.addresses
+		.filter((item, index) => indexes.indexOf(index) == -1)
+		.forEach(i => {
+			objChanges.push({
+				type: 'delete',
+				table: 'addresses',
+				peopleId: oldPeople.id,
+				address: i
+			});
+		});
 
 	return objChanges;
 }
 
 function applyChanges(client, changes, callback) {
-	//TODO Store changes to db
+	// insert people
+	for(let ins of changes.insert.filter(i => i.table == 'people')) {
+		insertPeople(client, ins.values, function(err, data) {
+			console.log(err, data);
+		});
+	}
+
+	// insert addresses
+	let insAddrs = changes.insert
+		.filter(i => i.table == 'addresses')
+		.map(i => i.values);
+
+	insertAddresses(client, insAddrs, function(err, data) {
+		console.log(err, data);
+	});
+
+
+	let delAddrs = changes.delete
+		.filter(i => i.table == 'addresses');
+	deleteAddresses(client, delAddrs, function(err, data) {
+		console.log(err, data);
+	});
+
+	let delPpl = changes.delete
+		.filter(i => i.table == 'people');
+	deletePeople(client, delPpl, function(err, data) {
+		console.log(err, data);
+	});
+
+
+
+
+
+	// TODO
 }
+
+function insertPeople(client, people, callback) {
+	let insertPeople = `INSERT INTO people(id, firstName, lastName, birthdate)
+						VALUES(default, '${people.firstName}', '${people.lastName}',
+						'${people.birthdate}') RETURNING id;`;
+
+	client.query(insertPeople, (err, result) => {
+	    if(err) return callback(err);
+		let pplId = result.rows[0].id;
+
+		let vals = people.addresses.map(a => `(default, '${a}', ${pplId})`).join(',');
+		let insertAddr = `INSERT INTO addresses(id, address, peopleId)
+							VALUES ${vals} ;`;
+
+		client.query(insertAddr, (err, result) => {
+			if(err) return callback(err);
+
+			callback(null, pplId);
+		});
+	});
+}
+
+function insertAddresses(client, addresses, callback) {
+	let vals = addresses.map(a => `(default, '${a.address}', ${a.peopleId})`).join(',');
+	let insertAddr = `INSERT INTO addresses(id, address, peopleId)
+						VALUES ${vals} ;`;
+
+	if(!vals) return callback();
+
+	client.query(insertAddr, (err, result) => {
+		if(err) return callback(err);
+
+		callback(null, result);
+	});
+}
+
+function deleteAddresses(client, addresses, callback) {
+	let statement = addresses.map(v => {
+		let del = `(peopleId=${v.peopleId} AND address='${v.address}')`;
+		return del;
+	}).join(' OR ');
+
+	if(!statement) return callback();
+
+	let query = `DELETE FROM addresses WHERE ${statement};`;
+	client.query(query, (err, result) => {
+		if(err) return callback(err);
+
+		callback(null, 'deleted');
+	});
+}
+
+function deletePeople(client, peoples, callback) {
+	let statement = peoples.map(v => `(id=${v.id})`).join(' OR ');
+
+	if(!statement) return callback();
+
+	let query = `DELETE FROM people WHERE ${statement};`;
+	client.query(query, (err, result) => {
+		if(err) return callback(err);
+
+		callback(null, 'deleted');
+	});
+}
+
+
+
+
+
+
+
 
 /* sync data from CSV to pg-DB */
 function sync(data) {
-
 	pg.connect(dbUrl , function(err, client, done){
 		if(err) return console.error(err);
 		console.log('connected to pg!');
@@ -157,14 +264,13 @@ function sync(data) {
 		client.query('SELECT NOW() AS "theTime"', function(err, result) {
 		    if(err) return console.error('error running query', err);
 		    console.log(result.rows[0].theTime);
-		    client.end();
 		});
 
 		selectPeople(client, function(err, dbData) {
 			let changes = getChanges(data, dbData);
 			applyChanges(client, changes, function(err, data){
-
 				// TODO after changes saved
+				client.end();
 			});
 		});
 	});
