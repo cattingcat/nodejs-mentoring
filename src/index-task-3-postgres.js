@@ -5,6 +5,7 @@
 
 'use strict';
 const
+	fs = require('fs'),
     Reader =  require('./csv-orm').Reader,
 	synchronizer = require('./sql-db/synchronizer.js');
 
@@ -20,13 +21,24 @@ let options = {
     config: __dirname + '/../data/people/config.xml'
 };
 
-let reader = new Reader();
+// Store to JSON-file
+synchronizer.selectPeople(function(err, data) {
+	let filepath = __dirname + '/../data/people/people-fromDB.json';
 
+	// Save dump from DB
+	fs.writeFile(filepath, JSON.stringify(data), function (err) {
+		if (err) return console.log(err);
+	});
+});
+
+// Sync from CSV to DB
+let reader = new Reader();
 reader.read(options, function(err, data) {
 	if(err) return console.error(err);
 
-	console.log('Data: ', data);
-
 	// Synchronize data from CSV file to Relational-DB
-	synchronizer.sync(data);
+	//synchronizer.createSchema();
+	synchronizer.sync(data, (err, data) => {
+		console.log('Synchronization done!');
+	});
 });

@@ -195,7 +195,21 @@ Synchronizer.prototype.applyChanges = function(changes, callback) {
 
 
 
+function selectPeople(callback) {
+	pg.connect(dbUrl , function(err, client, done){
+		if(err) return callback(err);
 
+		const synchronizer = new Synchronizer(client);
+		
+		synchronizer.peopleRepo.selectPeople(function(err, data) {
+			client.end();
+
+			if(err) return callback(err);
+
+			callback(null, data);
+		});
+	});
+}
 
 /* sync data from CSV to pg-DB */
 function sync(data, callback) {
@@ -238,3 +252,4 @@ function createSchema() {
 
 exports.sync = sync;
 exports.createSchema = createSchema;
+exports.selectPeople = selectPeople;

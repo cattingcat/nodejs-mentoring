@@ -1,0 +1,8 @@
+<root>
+    <mapping name="people">
+        <property name="firstName" />
+		<property name="lastName" />
+		<property name="birthdate" />
+        <property name="addresses" type="rest" />
+    </mapping>
+</root>
