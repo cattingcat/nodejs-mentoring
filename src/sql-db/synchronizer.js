@@ -7,47 +7,10 @@ const
 	config = require('./config.json'),
 	dbUrl = config.db + '?ssl=true', // Add ssl for remote connection
 	pg = require('pg'),
-	fs = require('fs');
-
-/* select people and addresses, mapping */
-function selectPeople(client, callback) {
-	let query = `SELECT p.id, p.firstName, p.lastName, p.birthdate, a.address
-				FROM people AS p LEFT JOIN addresses AS a ON p.id = a.peopleId`;
-
-	client.query(query, function(err, result) {
-	    if(err) {
-			console.error('error running query', err);
-			if(callback) callback(err);
-		}
-
-		let map  = new Map();
-		// make map of results
-		for(let r of result.rows) {
-			let mapEntry = map.get(r.id);
-
-			if(mapEntry) {
-				mapEntry.addresses.push(r.address);
-			} else {
-				let obj = {
-					id: r.id,
-					firstName: r.firstname,
-					lastName: r.lastname,
-					birthdate: r.birthdate,
-					addresses: [r.address]
-				};
-
-				map.set(r.id, obj);
-			}
-		}
-
-		let peopleArray = [];
-		for(let mapEntry of map.values()){
-			peopleArray.push(mapEntry);
-		}
-
-		if(callback) callback(null, peopleArray);
-	});
-}
+	fs = require('fs'),
+	when = require('when'),
+	PeopleRepository = require('./people-repo').PeopleRepository,
+	AddressRepository = require('./address-repo').AddressRepository;
 
 /* changes between two People-collections */
 function getChanges(actual, old) {
@@ -99,8 +62,8 @@ function compareObjects(oldPeople, newPeople) {
 	let id = oldPeople.id,
 		objChanges = [];
 
-	let dbDate = oldPeople.birthdate.toLocaleDateString(),
-		csvDate = new Date(newPeople.birthdate).toLocaleDateString();
+	let dbDate = oldPeople.birthdate,
+		csvDate = new Date(newPeople.birthdate).toUTCString();
 
 	if(dbDate != csvDate) {
 		objChanges.push({
@@ -146,108 +109,88 @@ function compareObjects(oldPeople, newPeople) {
 	return objChanges;
 }
 
-function applyChanges(client, changes, callback) {
+function Synchronizer(client) {
+	this.peopleRepo = new PeopleRepository(client);
+	this.addressRepo = new AddressRepository(client);
+
+	// run test query
+	client.query('SELECT NOW() AS "theTime"', function(err, result) {
+		if(err) return console.error('error running query', err);
+		console.log('Synchronizer ctor: ', result.rows[0].theTime);
+	});
+}
+
+Synchronizer.prototype.sync = function(data, callback) {
+	this.peopleRepo.selectPeople((err, dbData) => {
+		let changes = getChanges(data, dbData);
+		this.applyChanges(changes, (err, data) => {
+
+			// TODO after changes saved
+
+			callback();
+		});
+	});
+};
+
+
+Synchronizer.prototype.applyChanges = function(changes, callback) {
+	let promises = [];
+
 	// insert people
 	for(let ins of changes.insert.filter(i => i.table == 'people')) {
-		insertPeople(client, ins.values, function(err, data) {
+		let dfd = when.defer();
+		this.peopleRepo.insertPeople(ins.values, function(err, data) {
 			console.log(err, data);
+			dfd.resolve();
 		});
+		promises.push(dfd.promise);
+	}
+
+	// del ppls
+	let delPpl = changes.delete.filter(i => i.table == 'people');
+	let delPeopleDfd = when.defer();
+	this.peopleRepo.deletePeople(delPpl, function(err, data) {
+		console.log(err, data);
+		delPeopleDfd.resolve();
+	});
+	promises.push(delPeopleDfd.promise);
+
+	// upd people
+	let updPpls = changes.update.filter(i => i.table == 'people');
+	for(let ppl of updPpls) {
+		let dfd = when.defer();
+		this.peopleRepo.updatePeople(ppl, function(err, data) {
+			console.log(err, data);
+			dfd.resolve();
+		});
+		promises.push(dfd.promise);
 	}
 
 	// insert addresses
 	let insAddrs = changes.insert
 		.filter(i => i.table == 'addresses')
 		.map(i => i.values);
-
-	insertAddresses(client, insAddrs, function(err, data) {
+	let insertAddrDfd = when.defer();
+	this.addressRepo.insertAddresses(insAddrs, function(err, data) {
 		console.log(err, data);
+		insertAddrDfd.resolve();
 	});
+	promises.push(insertAddrDfd.promise);
 
-
+	// delete addrs
 	let delAddrs = changes.delete
 		.filter(i => i.table == 'addresses');
-	deleteAddresses(client, delAddrs, function(err, data) {
+	let deleteAddrDfd = when.defer();
+	this.addressRepo.deleteAddresses(delAddrs, function(err, data) {
 		console.log(err, data);
+		deleteAddrDfd.resolve();
 	});
+	promises.push(deleteAddrDfd.promise);
 
-	let delPpl = changes.delete
-		.filter(i => i.table == 'people');
-	deletePeople(client, delPpl, function(err, data) {
-		console.log(err, data);
-	});
-
-
-
-
-
-	// TODO
-}
-
-function insertPeople(client, people, callback) {
-	let insertPeople = `INSERT INTO people(id, firstName, lastName, birthdate)
-						VALUES(default, '${people.firstName}', '${people.lastName}',
-						'${people.birthdate}') RETURNING id;`;
-
-	client.query(insertPeople, (err, result) => {
-	    if(err) return callback(err);
-		let pplId = result.rows[0].id;
-
-		let vals = people.addresses.map(a => `(default, '${a}', ${pplId})`).join(',');
-		let insertAddr = `INSERT INTO addresses(id, address, peopleId)
-							VALUES ${vals} ;`;
-
-		client.query(insertAddr, (err, result) => {
-			if(err) return callback(err);
-
-			callback(null, pplId);
-		});
+	when.all(promises).then(function () {
+	    callback(null, 'Synchronization done');
 	});
 }
-
-function insertAddresses(client, addresses, callback) {
-	let vals = addresses.map(a => `(default, '${a.address}', ${a.peopleId})`).join(',');
-	let insertAddr = `INSERT INTO addresses(id, address, peopleId)
-						VALUES ${vals} ;`;
-
-	if(!vals) return callback();
-
-	client.query(insertAddr, (err, result) => {
-		if(err) return callback(err);
-
-		callback(null, result);
-	});
-}
-
-function deleteAddresses(client, addresses, callback) {
-	let statement = addresses.map(v => {
-		let del = `(peopleId=${v.peopleId} AND address='${v.address}')`;
-		return del;
-	}).join(' OR ');
-
-	if(!statement) return callback();
-
-	let query = `DELETE FROM addresses WHERE ${statement};`;
-	client.query(query, (err, result) => {
-		if(err) return callback(err);
-
-		callback(null, 'deleted');
-	});
-}
-
-function deletePeople(client, peoples, callback) {
-	let statement = peoples.map(v => `(id=${v.id})`).join(' OR ');
-
-	if(!statement) return callback();
-
-	let query = `DELETE FROM people WHERE ${statement};`;
-	client.query(query, (err, result) => {
-		if(err) return callback(err);
-
-		callback(null, 'deleted');
-	});
-}
-
-
 
 
 
@@ -255,23 +198,17 @@ function deletePeople(client, peoples, callback) {
 
 
 /* sync data from CSV to pg-DB */
-function sync(data) {
+function sync(data, callback) {
 	pg.connect(dbUrl , function(err, client, done){
 		if(err) return console.error(err);
 		console.log('connected to pg!');
 
-		// run test query
-		client.query('SELECT NOW() AS "theTime"', function(err, result) {
-		    if(err) return console.error('error running query', err);
-		    console.log(result.rows[0].theTime);
-		});
+		const synchronizer = new Synchronizer(client);
+		synchronizer.sync(data, function(err, data) {
 
-		selectPeople(client, function(err, dbData) {
-			let changes = getChanges(data, dbData);
-			applyChanges(client, changes, function(err, data){
-				// TODO after changes saved
-				client.end();
-			});
+			client.end();
+
+			callback(data);
 		});
 	});
 }

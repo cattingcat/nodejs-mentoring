@@ -34,5 +34,7 @@ reader.read(options, function(err, data) {
 
 	// Synchronize data from CSV file to Relational-DB
 	//synchronizer.createSchema();
-	synchronizer.sync(data);
+	synchronizer.sync(data, (err, data) => {
+		console.log('Synchronization done!');
+	});
 });
