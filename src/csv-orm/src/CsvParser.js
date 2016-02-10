@@ -14,11 +14,13 @@ function stateParser(line) {
 
         switch(c) {
             case '"':
+			//case '(':
                 if(state == 0) {
                     startIndex = i + 1;
                     state = 1;
                     break;
                 }
+			//case ')':
                 if(state == 1){
                     endIndex = i - 1;
                     state = 2;

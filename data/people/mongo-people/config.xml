@@ -3,6 +3,6 @@
         <property name="firstName" />
 		<property name="lastName" />
 		<property name="birthdate" />
-        <property name="addresses" type="rest" />
+        <property name="addresses" />
     </mapping>
 </root>

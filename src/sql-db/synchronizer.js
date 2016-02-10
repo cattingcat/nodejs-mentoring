@@ -109,6 +109,7 @@ function compareObjects(oldPeople, newPeople) {
 	return objChanges;
 }
 
+
 function Synchronizer(client) {
 	this.peopleRepo = new PeopleRepository(client);
 	this.addressRepo = new AddressRepository(client);
@@ -131,7 +132,6 @@ Synchronizer.prototype.sync = function(data, callback) {
 		});
 	});
 };
-
 
 Synchronizer.prototype.applyChanges = function(changes, callback) {
 	let promises = [];
@@ -190,9 +190,7 @@ Synchronizer.prototype.applyChanges = function(changes, callback) {
 	when.all(promises).then(function () {
 	    callback(null, 'Synchronization done');
 	});
-}
-
-
+};
 
 
 function selectPeople(callback) {
@@ -200,7 +198,7 @@ function selectPeople(callback) {
 		if(err) return callback(err);
 
 		const synchronizer = new Synchronizer(client);
-		
+
 		synchronizer.peopleRepo.selectPeople(function(err, data) {
 			client.end();
 
