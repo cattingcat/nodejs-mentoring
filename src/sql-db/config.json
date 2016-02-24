@@ -1,3 +1,3 @@
 {
-	"db": "find it on heroku site :3"
+	"db": "postgres://olmukarvhconog:XOpnxvX49EdYlxvpJjihWwEYBD@ec2-54-225-199-245.compute-1.amazonaws.com:5432/d8enrmke2m0i9b"
 }

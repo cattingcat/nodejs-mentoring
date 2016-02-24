@@ -43,8 +43,8 @@ reader.read(options, function(err, data) {
 			let arr = /(\w+)\((\d+),(\d+)\)/.exec(a);
 			return {
 				name: arr[1],
-				type: 'Point',
-				coordinates: [arr[2], arr[3]]
+				index: '2d',
+				type: [arr[2], arr[3]]
 			};
 		});
 
@@ -55,9 +55,25 @@ reader.read(options, function(err, data) {
 		};
 	});
 
-	// Synchronize data from CSV file to Relational-DB
-	//synchronizer.createSchema();
-	/*synchronizer.sync(data, (err, data) => {
+	synchronizer.selectPeople(function(err, data) {
+		data.forEach(i => {
+			if(!peoples.some(j =>
+				j.firstName == i.get('firstName') && j.lastName == i.get('lastName') )) {
+					i.remove();
+				}
+		});
+	});
+
+	synchronizer.findNear([10, 10], function(err, data) {
+		data.forEach(i => {
+			if(!peoples.some(j =>
+				j.firstName == i.get('firstName') && j.lastName == i.get('lastName') )) {
+					i.remove();
+				}
+		});
+	});
+
+	synchronizer.sync(peoples, (err, data) => {
 		console.log('Synchronization done!');
-	});*/
+	});
 });
